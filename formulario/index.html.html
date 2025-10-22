@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrando Localização...</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; }
+    </style>
+</head>
+<body>
+    <h1>Aguarde um instante...</h1>
+    <p>Estamos capturando sua localização para o registro.</p>
+    <p>Por favor, clique em "Permitir" quando o seu navegador solicitar.</p>
+
+    <script>
+        // ---------- CONFIGURE AQUI SUAS INFORMAÇÕES ----------
+
+        // 1. Cole o link do seu formulário aqui (a parte antes do "?")
+        const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSf9ub6KcA-c5hZJ4OOZ6fp5h1u63s2t9M6o2YQqujmQgKxmEg/viewform";
+
+        // 2. Cole os "Entry IDs" que você descobriu na Etapa B
+        const latitudeEntry = "entry.60162037";  // <-- SUBSTITUA PELO SEU ID DA LATITUDE
+        const longitudeEntry = "entry.1038829402"; // <-- SUBSTITUA PELO SEU ID DA LONGITUDE
+
+        // ----------------------------------------------------
+
+        window.onload = function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) { // O que fazer se der certo
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        const prefilledURL = `${formURL}?${latitudeEntry}=${lat}&${longitudeEntry}=${lon}`;
+                        window.location.href = prefilledURL; // Redireciona para o formulário
+                    },
+                    function(error) { // O que fazer se der erro
+                        alert("ERRO: Não foi possível obter a localização. Mensagem: " + error.message);
+                    }
+                );
+            } else {
+                alert("Geolocalização não é suportada por este navegador.");
+            }
+        };
+    </script>
+</body>
+</html>
